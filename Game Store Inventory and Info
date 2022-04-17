@@ -1,0 +1,39 @@
+CREATE TABLE Game_Store (id INTEGER PRIMARY KEY, Games TEXT, Copies INTEGER, Price INTEGER);
+
+INSERT INTO Game_Store VALUES (1, "Munchkin", 10, 25.99);
+INSERT INTO Game_Store VALUES (2, "Cards Against Humanity", 5, 25.00);
+INSERT INTO Game_Store VALUES (3, "Fluxx", 7, 15.99);
+INSERT INTO Game_Store VALUES (4, "Disney Villainous Base Set", 3, 39.99);
+INSERT INTO Game_Store VALUES (5, "Disney Villainous Expansions", 4, 32.99);
+INSERT INTO Game_Store VALUES (6, "Here to Slay", 5, 23.99);
+INSERT INTO Game_Store VALUES (7, "Dice Sets", 18, 10.99);
+INSERT INTO Game_Store VALUES (8, "Miniatures", 14, 18.99);
+INSERT INTO Game_Store VALUES (9, "Love Letter", 4, 14.99);
+
+SELECT Price, SUM(Copies) FROM Game_Store GROUP BY Price;
+
+SELECT AVG(Price) AS avg_price FROM Game_Store;
+
+SELECT COUNT(*),
+
+    CASE
+    WHEN Price > 23 THEN "Expensive Inventory"
+    WHEN Price < 17 THEN "Cheaper Inventory"
+    ELSE "Average Cost Inventory"
+    
+    END AS "Inventory_Value"
+    
+FROM Game_Store DESC
+GROUP BY Inventory_Value;
+
+SELECT Games,
+
+    CASE
+    WHEN Price > 23 THEN "Expensive Inventory"
+    WHEN Price < 17 THEN "Cheaper Inventory"
+    ELSE "Average Cost Inventory"
+    
+    END AS "Inventory_Value"
+    
+FROM Game_Store DESC
+GROUP BY Games;
