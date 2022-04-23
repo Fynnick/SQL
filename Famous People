@@ -1,0 +1,114 @@
+CREATE TABLE celebrities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    name TEXT, 
+    net_worth INTEGER);
+
+INSERT INTO celebrities (name, net_worth) VALUES ("Chris Pratt", 80000000);
+INSERT INTO celebrities (name, net_worth) VALUES ("Johnny Depp", 75000000);
+INSERT INTO celebrities (name, net_worth) VALUES
+("Markiplier", 38000000);
+INSERT INTO celebrities (name, net_worth) VALUES ("Felicia Day", 1000000);
+INSERT INTO celebrities (name, net_worth) VALUES ("Julia Roberts", 250000000);
+INSERT INTO celebrities (name, net_worth) VALUES ("Alan Tudyk", 2000000);
+INSERT INTO celebrities (name, net_worth) VALUES ("Robert Downey Jr.", 300000000);
+INSERT INTO celebrities (name, net_worth) VALUES
+("Ohmwrecker", 1500000);
+
+CREATE TABLE fanbase (
+    celebrity_id INTEGER,
+    name TEXT,
+    social_media TEXT,
+    followers INTEGER);
+    
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (1, "Chris Pratt", "Twitter", 8000000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (1, "Chris Pratt", "Facebook", 11000000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (2, "Johnny Depp", "Facebook", 12000000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (3, "Markiplier", "Facebook", 3700000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (3, "Markiplier", "Twitter",13500000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (4, "Felicia Day", "Facebook", 1500000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (4, "Felicia Day", "Twitter", 2600000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (5, "Julia Roberts", "Facebook", 20000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (5, "Julia Roberts", "Twitter", 470400);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (6, "Alan Tudyk", "Facebook", 90000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (6, "Alan Tudyk", "Twitter", 445500);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (7, "Robert Downey Jr.", "Facebook", 40000000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (7, "Robert Downey Jr.", "Twitter", 17300000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (8, "Ohmwrecker", "Facebook", 36000);
+INSERT INTO fanbase (celebrity_id, name, social_media, followers) VALUES (8, "Ohmwrecker", "Twitter", 731800);
+
+CREATE TABLE known_for
+    (celebrity_id INTEGER,
+    name TEXT,
+    platform TEXT);
+    
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (1, "Chris Pratt", "Movies");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (1, "Chris Pratt", "TV");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (2, "Johnny Depp", "Movies");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (3, "Markiplier", "YouTube");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (4, "Felicia Day", "YouTube");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (4, "Felicia Day", "TV");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (5, "Julia Roberts", "Movies");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (6, "Alan Tudyk", "Movies");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (6, "Alan Tudyk", "TV");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (7, "Robert Downey Jr.", "Movies");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (7, "Robert Downey Jr.", "TV");
+INSERT INTO known_for (celebrity_id, name, platform) VALUES (8, "Ohmwrecker", "YouTube");
+
+SELECT c.name, kf.platform, c.net_worth 
+    FROM celebrities c
+    JOIN known_for kf
+    ON c.id = kf.celebrity_id;
+
+SELECT c.name, c.net_worth, SUM(followers) AS total_followers
+    FROM celebrities c
+    JOIN fanbase f
+    ON c.id = f.celebrity_id
+    GROUP BY c.name
+    HAVING net_worth > 5000000 AND total_followers > 20000000;
+
+SELECT c.name, c.net_worth, kf.platform 
+    FROM celebrities c
+    JOIN known_for kf
+    ON c.id = kf.celebrity_id
+    WHERE kf.platform = "Movies";
+
+INSERT INTO fanbase (celebrity_id, name, social_media) VALUES (2, "Johnny Depp", "Twitter");
+
+SELECT * FROM fanbase WHERE celebrity_id = 2;
+
+SELECT c.name, f.social_media, kf.platform 
+    FROM celebrities c
+    LEFT JOIN fanbase f
+    ON c.id = f.celebrity_id
+    LEFT JOIN known_for kf
+    ON f.celebrity_id = kf.celebrity_id
+    WHERE f.social_media = NULL AND kf.platform = "Movies";
+
+CREATE TABLE films (celebrity_id INTEGER, movie TEXT);
+
+SELECT id, name FROM celebrities;
+
+INSERT INTO films (celebrity_id, movie) VALUES(1, "Jurassic World");
+INSERT INTO films (celebrity_id, movie) VALUES(1, "Infinity War");
+INSERT INTO films (celebrity_id, movie) VALUES (1, "Onward");
+INSERT INTO films (celebrity_id, movie) VALUES(1, "Endgame");
+INSERT INTO films (celebrity_id, movie) VALUES(2, "Pirates of the Caribbean");
+INSERT INTO films (celebrity_id, movie) VALUES(2, "Edward Scissorhands");
+INSERT INTO films (celebrity_id, movie) VALUES(2, "The Crimes of Grindelwald");
+INSERT INTO films (celebrity_id, movie) VALUES(5, "Pretty Woman");
+INSERT INTO films (celebrity_id, movie) VALUES(5, "Flatliners");
+INSERT INTO films (celebrity_id, movie) VALUES(5, "Ocean's Eleven");
+INSERT INTO films (celebrity_id, movie) VALUES(6, "Tucker and Dale vs. Evil");
+INSERT INTO films (celebrity_id, movie) VALUES(6, "Dodgeball");
+INSERT INTO films (celebrity_id, movie) VALUES(6, "Wreck-it Ralph");
+INSERT INTO films (celebrity_id, movie) VALUES(6, "Moana");
+INSERT INTO films (celebrity_id, movie) VALUES(7, "Sherlock Holmes");
+INSERT INTO films (celebrity_id, movie) VALUES(7, "Infinity War");
+INSERT INTO films (celebrity_id, movie) VALUES(7, "Iorn Man");
+INSERT INTO films (celebrity_id, movie) VALUES(7, "Endgame");
+
+SELECT c.name, f.movie 
+    FROM celebrities c
+    LEFT JOIN films f
+    ON c.id = f.celebrity_id
+    WHERE f.movie = "Infinity War";
