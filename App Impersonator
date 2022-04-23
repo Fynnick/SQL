@@ -1,0 +1,66 @@
+CREATE TABLE Archero (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    hero_name TEXT,
+    hero_level INTEGER default "0");
+
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Atreus", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Urasil", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Phoren", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Taranis", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Helix",59);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Meowgik", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Shari", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Ayana", 60);
+INSERT INTO Archero (hero_name, hero_level) VALUES ("Bonnie", 60);
+
+SELECT * FROM Archero;
+
+UPDATE Archero SET hero_level = "60" WHERE id = 5;
+
+SELECT * FROM Archero;
+
+ALTER TABLE Archero ADD attack INTEGER default "0";
+
+SELECT * FROM Archero;
+
+UPDATE Archero SET attack = "646" WHERE id = "1";
+
+SELECT * FROM Archero;
+
+UPDATE Archero SET attack = "651" WHERE id = "2";
+UPDATE Archero SET attack = "661" WHERE id = "3";
+UPDATE Archero SET attack = "736" WHERE id = "4";
+
+SELECT * FROM Archero;
+
+UPDATE Archero SET attack = "785" WHERE id = "5";
+UPDATE Archero SET attack = "1081" WHERE id = "6";
+UPDATE Archero SET attack = "787" WHERE id = "7";
+UPDATE Archero SET attack = "963" WHERE id = "8";
+UPDATE Archero SET attack = "839" WHERE id = "9";
+
+SELECT * FROM Archero;
+
+INSERT INTO Archero (hero_name, hero_level, attack) VALUES("Ophelia", 3, 184);
+
+SELECT * FROM Archero;
+
+UPDATE Archero
+    SET attack = "1136"
+    WHERE hero_name = "Meowgik";
+
+SELECT * FROM Archero;
+
+UPDATE Archero
+    SET hero_level = "65"
+    WHERE id = 6;
+
+SELECT * FROM Archero;
+
+INSERT INTO Archero (hero_name) VALUES ("Deletus");
+ 
+SELECT * FROM Archero;
+
+DELETE FROM Archero WHERE hero_name = "Deletus";
+
+SELECT * FROM Archero;
