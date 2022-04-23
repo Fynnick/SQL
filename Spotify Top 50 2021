@@ -1,0 +1,69 @@
+--Using SQL to create a Table for the Spotify Dataset
+CREATE TABLE BIT_DB.Spotifydata (
+id INTEGER PRIMARY KEY,
+artist_name VARCHAR NOT NULL,
+track_name VARCHAR NOT NULL,
+track_id VARCHAR NOT NULL,
+popularity INTEGER NOT NULL,
+danceability DECIMAL(4,3) NOT NULL,
+energy DECIMAL(4,3) NOT NULL,
+key INTEGER NOT NULL,
+loudness DECIMAL(5,3) NOT NULL,
+mode INTEGER NOT NULL,
+speechiness DECIMAL(5,4) NOT NULL,
+acousticness DECIMAL(6,5) NOT NULL,
+instrumentalness TEXT NOT NULL,
+liveness DECIMAL(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo DECIMAL(6,3) NOT NULL,
+duration_ms INTEGER NOT NULL,
+time_signature INTEGER NOT NULL
+);
+
+--Creating queries that will be referenced numerous times while writing additional SQL queries to aggregate important data from the table
+SELECT * FROM BIT_DB.Spotifydata;
+
+SELECT * FROM BIT_DB.Spotifydata
+ORDER BY artist_name;
+
+SELECT artist_name,
+    track_name,
+    popularity,
+    danceability,
+    energy
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name, track_name;
+
+--Using SQL to aggregate the average of the main 3 values of the table and listing the results below to avoid running the query countless times for reference.
+SELECT AVG(popularity),
+    AVG(danceability),
+    AVG(energy)
+FROM BIT_DB.Spotifydata;
+-- AVG(popularity) = 86.8 AVG(danceability) = 0.68572 AVG(energy) = 0.64636
+
+--Using the gained information from the previous query to select the releative artists and their songs who have scored above average in all 3 categories 
+SELECT artist_name,
+    track_name,
+    popularity,
+    danceability,
+    energy
+FROM BIT_DB.Spotifydata
+WHERE popularity >= '86.8' AND danceability >= '0.68572' AND energy >= '0.64636'
+GROUP BY artist_name, track_name;
+
+--Creating a SQL queary to aggregate the top 10 most popular and danceable songs for an "upcoming party"
+SELECT artist_name,
+    track_name,
+    popularity,
+    danceability
+FROM BIT_DB.Spotifydata
+WHERE popularity >= '86.8' AND danceability >= '0.68572'
+GROUP BY artist_name
+ORDER BY popularity DESC LIMIT 10;
+
+--Finding out how many times each artist made it to the top 50 and ordering them by greatest to least amount of times to aggregate the most consistant artist that year
+SELECT artist_name,
+    COUNT(track_name) AS total_hits
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY total_hits DESC;
