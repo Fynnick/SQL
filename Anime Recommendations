@@ -1,0 +1,46 @@
+--Creating new tables and making sure they're not null
+CREATE TABLE BIT_DB.anime (
+    MAL_ID INTEGER,
+    Name VARCHAR,
+    Score DECIMAL (4,2),
+    Genres TEXT,
+    English_name VARCHAR,
+    Japanese_name VARCHAR,
+    Type TEXT,
+    Episodes VARCHAR,
+    Aired VARCHAR,
+    Premiered VARCHAR);
+    
+SELECT * FROM BIT_DB.anime;
+
+
+CREATE TABLE BIT_DB.anime_with_synopsis (
+    MAL_ID INTEGER,
+    Name VARCHAR,
+    Score DECIMAL (4,2),
+    Genres VARCHAR,
+    synopsis VARCHAR);
+    
+SELECT * FROM BIT_DB.anime_with_synopsis;
+
+CREATE TABLE BIT_DB.rating_complete (
+   user_id INTEGER,
+   anime_id INTEGER,
+   rating INTEGER);
+
+SELECT * FROM BIT_DB.rating_complete;
+
+CREATE TABLE BIT_DB.animelist (
+    user_id INTEGER,
+    anime_id INTEGER,
+    rating INTEGER
+    watching_status INTEGER,
+    watched_episodes INTEGER);
+    
+SELECT * FROM BIT_DB.animelist;
+
+CREATE TABLE BIT_DB.watching_status (
+    ID_of_the_status INTEGER,
+    description_of_the_status INTEGER);
+    
+SELECT * FROM BIT_DB.watching_status;
