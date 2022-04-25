@@ -51,7 +51,7 @@ FROM BIT_DB.Spotifydata
 WHERE popularity >= '86.8' AND danceability >= '0.68572' AND energy >= '0.64636'
 GROUP BY artist_name, track_name;
 
---Creating a SQL queary to aggregate the top 10 most popular and danceable songs for an "upcoming party"
+--Creating a SQL queary to find the top 10 most popular and danceable songs for an "upcoming party"
 SELECT artist_name,
     track_name,
     popularity,
@@ -61,9 +61,21 @@ WHERE popularity >= '86.8' AND danceability >= '0.68572'
 GROUP BY artist_name
 ORDER BY popularity DESC LIMIT 10;
 
---Finding out how many times each artist made it to the top 50 and ordering them by greatest to least amount of times to aggregate the most consistant artist that year
+--Finding out which artists made the top 50 the most by aggregating data and demonstrating how HAVING can be used to shorten the list
 SELECT artist_name,
     COUNT(track_name) AS total_hits
 FROM BIT_DB.Spotifydata
 GROUP BY artist_name
 ORDER BY total_hits DESC;
+
+SELECT artist_name, COUNT(artist_name) AS total_hits
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(artist_name) > 1
+ORDER BY "total_hits" DESC;
+
+--Query used to find the artist and track name of the top 10 most popular songs from the top 50
+SELECT artist_name, track_name, popularity
+    FROM BIT_DB.Spotifydata
+    GROUP BY artist_name
+    ORDER BY popularity DESC LIMIT 10;
