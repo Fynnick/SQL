@@ -1,0 +1,27 @@
+--Find the average fuel price at each store    
+SELECT Store, ROUND(AVG(Fuel_Price)) AS AVG_Price 
+    FROM Walmart.Features
+GROUP BY Store
+ORDER BY Store;
+
+--Does the average spending increase or decease during the holidays?
+SELECT  Feat.Store, ROUND(AVG(Tr.Weekly_Sales)) AS AVG_Sales, Tr.IsHoliday 
+    FROM Walmart.Features Feat
+JOIN Walmart.Train Tr
+    ON Feat.Store = Tr.Store
+GROUP BY Tr.IsHoliday, Feat.Store
+ORDER BY Feat.Store;
+
+--Does the temperature affect the cost of fuel?
+SELECT Store, ROUND(AVG(Temperature)) AS Temp, ROUND(AVG(Fuel_Price)) AS Cost
+    From Walmart.Features
+GROUP BY Store
+ORDER BY Store;
+
+--Does the size of the store increase or decrease sales?
+SELECT St.Store, St.Size, ROUND(AVG(Tr.Weekly_Sales)) AS AVG_Sales 
+    FROM Walmart.Stores St
+JOIN Walmart.Train Tr
+    ON St.Store = Tr.Store
+GROUP BY St.Store, St.Size
+ORDER BY Avg_Sales DESC LIMIT 10;
