@@ -25,3 +25,20 @@ JOIN Walmart.Train Tr
     ON St.Store = Tr.Store
 GROUP BY St.Store, St.Size
 ORDER BY Avg_Sales DESC LIMIT 10;
+
+--How many holidays did each store recognize in 2012
+SELECT Store, COUNT(Date) AS Total_Holidays
+    FROM Walmart.Test
+WHERE Is_Holiday = "TRUE" AND Date LIKE '2012%'
+GROUP BY Store
+ORDER BY Store;
+
+--What were the top 10 stores that made the most money in the year 2010
+SELECT Ft.Store, ROUND(SUM(Tr.Weekly_Sales)) AS Yearly_Sales 
+    FROM Walmart.Features Ft
+JOIN Walmart.Train Tr
+    ON Ft.Store = Tr. Store
+WHERE Tr.Date LIKE '2010%'
+GROUP BY Ft.Store
+ORDER BY Yearly_Sales DESC LIMIT 10;
+   
